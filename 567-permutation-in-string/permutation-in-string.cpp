@@ -1,27 +1,21 @@
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
-        vector<int> count1(26, 0);
-        vector<int> count2(26, 0);
 
-        // Count frequency of s1
-        for (char c : s1) {
-            count1[c - 'a']++;
+        if (s1.length() > s2.length()) {
+            return false;
         }
 
-        int k = s1.length();
+        sort(s1.begin(), s1.end());
 
-        // Sliding window on s2
-        for (int i = 0; i < s2.length(); i++) {
-            count2[s2[i] - 'a']++;
+        int n = s1.length();
 
-            // Remove character outside window
-            if (i >= k) {
-                count2[s2[i - k] - 'a']--;
-            }
+        for (int i = 0; i <= s2.length() - n; i++) {
+            string temp = s2.substr(i, n);
 
-            // Compare frequencies
-            if (count1 == count2) {
+            sort(temp.begin(), temp.end());
+
+            if (temp == s1) {
                 return true;
             }
         }
